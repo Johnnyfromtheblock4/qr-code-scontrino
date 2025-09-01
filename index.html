@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QR Code Scontrino Digitale</title>
+    <!-- Includi la libreria qrcode.js tramite CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <!-- Bootstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        padding: 20px;
+        background-color: #deebd4;
+      }
+      .title {
+        font-weight: bolder;
+      }
+      .logo {
+        width: 300px;
+      }
+      #qrcode {
+        display: flex;
+        justify-content: center;
+      }
+      #lettore {
+        display: flex;
+        justify-content: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-12 mb-5">
+          <h1 class="title my-5">IPER - SCONTRINO DIGITALE</h1>
+          <img src="img/iper-logo.png" class="img-fluid logo" />
+        </div>
+        <div class="col-12 col-md-6">
+          <h2 class="text-center">LETTORE QR</h2>
+          <p class="text-center">
+            Scansiona il QR code per accedere al lettore qr dello scontrino
+            elettronico
+          </p>
+          <!-- Div dove verrà visualizzato il QR code del lettore -->
+          <div id="lettore"></div>
+        </div>
+        <div class="col-12 col-md-6">
+          <h2 class="text-center">SCONTRINO DIGITALE</h2>
+          <p class="text-center">
+            Scansiona il QR code per ricevere il tuo scontrino elettronico
+          </p>
+          <!-- Div dove verrà visualizzato il QR code dello scontrino -->
+          <div id="qrcode"></div>
+        </div>
+        <div class="col-12">
+          <a href="#" class="btn btn-danger my-5">STAMPA LO SCONTRINO</a>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Genera il QR code per il lettore
+      new QRCode(document.getElementById("lettore"), {
+        text: "https://johnnyfromtheblock4.github.io/qr-code-lettore/",
+        width: 200,
+        height: 200,
+        colorDark: "#000000",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H,
+      });
+      // Dati della transazione
+      const transactionData = {
+        transaction_id: "TX123456789",
+        date: "2025-08-31T22:45:00",
+        store: "Supermercato XYZ",
+        items: [
+          { name: "Latte", quantity: 2, price: 1.5 },
+          { name: "Pane", quantity: 1, price: 2.0 },
+          { name: "Pasta", quantity: 3, price: 1.2 },
+        ],
+        total: 6.6,
+        payment_method: "Carta",
+      };
+
+      // Converti i dati in stringa JSON
+      const jsonData = JSON.stringify(transactionData);
+
+      // Genera il QR code
+      new QRCode(document.getElementById("qrcode"), {
+        text: jsonData,
+        width: 200,
+        height: 200,
+        colorDark: "#000000",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H, // Alta correzione degli errori
+      });
+    </script>
+  </body>
+</html>
